@@ -1,11 +1,17 @@
 import express, { Request, Response, Application } from 'express';
-
-const app: Application = express();
+import dotenv from "dotenv";
+import connectToDB from './db';
 const port: number =  Number(process.env.PORT) || 3000;
 
 
+const app: Application = express();
+dotenv.config();
+app.use(express.json());
+
+// connectToDB();
+
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!');
+    res.json({ res: 'Hello World!' });
 });
 
 app.listen(port, () => {
