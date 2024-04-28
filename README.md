@@ -1,4 +1,4 @@
-# Awesome Project Build with TypeORM
+# Orderbooks fetcher
 
 Steps to run this project:
 
