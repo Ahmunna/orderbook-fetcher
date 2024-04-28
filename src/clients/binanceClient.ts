@@ -1,6 +1,5 @@
-import { Orderbook } from '../models/orderbook';
 import { ExchangeBaseClient } from './exchangeBaseClient'
-
+import axios from 'axios'
 export class BinanceClient implements ExchangeBaseClient {
   private url: string;
 
@@ -8,14 +7,20 @@ export class BinanceClient implements ExchangeBaseClient {
     this.url = url;
   }
 
-  async orderbook(pair: string): Promise<Orderbook> {
-    // Implementation to fetch orderbook from Kraken API
-    // Example:
-    // const response = await fetch(`${this.url}/orderbook/${pair}`);
-    // return response.json();
-    return Promise.resolve({
-      bids: [7000, 7010, 7020],
-      asks: [7050, 7060, 7070],
-    });
+  async orderbook(pair: string, limit: number = 10): Promise<object> {
+    const endpoint: string = `${this.url}/api/v3/depth`
+    const params: object = {
+      symbol: pair,
+      limit: limit.toString()
+    }
+
+    try {
+      const response = await axios.get(endpoint, { params });
+
+      return response.data
+    }
+    catch(err) {
+      throw new Error('Failed to fetch order book');
+    }
   }
 }

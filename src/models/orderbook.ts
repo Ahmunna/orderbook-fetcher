@@ -1,8 +1,9 @@
+import { OrderbookEntry } from "./orderbookEntry";
 export class Orderbook {
-    bids: number[];
-    asks: number[];
+    bids: OrderbookEntry[];
+    asks: OrderbookEntry[];
 
-    constructor(bids: number[], asks: number[]) {
+    constructor(bids: OrderbookEntry[], asks: OrderbookEntry[]) {
         this.bids = bids
         this.asks = asks
     }

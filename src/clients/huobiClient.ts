@@ -1,4 +1,4 @@
-import { Orderbook } from '../models/orderbook';
+import axios from 'axios';
 import { ExchangeBaseClient } from './exchangeBaseClient'
 
 export class HuobiClient implements ExchangeBaseClient {
@@ -8,14 +8,21 @@ export class HuobiClient implements ExchangeBaseClient {
     this.url = url;
   }
 
-  async orderbook(pair: string): Promise<Orderbook> {
-    // Implementation to fetch orderbook from Kraken API
-    // Example:
-    // const response = await fetch(`${this.url}/orderbook/${pair}`);
-    // return response.json();
-    return Promise.resolve({
-      bids: [7000, 7010, 7020],
-      asks: [7050, 7060, 7070],
-    });
+  async orderbook(pair: string, depth: number = 10): Promise<object> {
+    const endpoint: string = `${this.url}/market/depth`
+
+    const params: object = {
+      symbol: pair,
+      depth: depth.toString(),
+      type: 'step0'
+    }
+
+    try {
+      const response = await axios.get(endpoint, { params });
+      return response.data;
+    }
+    catch(err) {
+      throw new Error('Failed to fetch order book')
+    }
   }
 }
