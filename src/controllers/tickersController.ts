@@ -8,8 +8,6 @@ const redisClient = redis.createClient();
     const key = `${req.params.baseAsset}${req.params.quoteAsset}`
 
     redisClient.get(key, async (err: Error, data: string) => {
-        if(err) throw err;
-
         if(data) {
           res.json({ result: parseFloat(data)})
         }
