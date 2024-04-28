@@ -11,15 +11,15 @@ export class KrakenAdapter implements ExchangeBaseAdapter {
       }
     
 
-  client(): KrakenClient {
+  private client(): KrakenClient {
     return new KrakenClient(process.env.KRAKEN_API_BASE_URL || '')
   }
 
-  to_pair(base_asset: string, quote_asset: string): string {
+  private to_pair(base_asset: string, quote_asset: string): string {
     return `${base_asset}${quote_asset}`
   }
 
-  buildOrderbook(result: any): Orderbook {
+  private buildOrderbook(result: any): Orderbook {
     const bids: OrderbookEntry[] = result.bids.map((bid: any) => {
         return new OrderbookEntry(parseFloat(bid[1]), parseFloat(bid[0]));
     });

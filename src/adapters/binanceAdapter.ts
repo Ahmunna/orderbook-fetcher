@@ -11,15 +11,15 @@ export class BinanceAdapter implements ExchangeBaseAdapter {
     return this.buildOrderbook(result);
   }
 
-  client(): BinanceClient {
+  private client(): BinanceClient {
     return new BinanceClient(process.env.BINANCE_API_BASE_URL || '')
   }
 
-  to_pair(base_asset: string, quote_asset: string): string {
+  private to_pair(base_asset: string, quote_asset: string): string {
     return `${base_asset}${quote_asset}`
   }
 
-  buildOrderbook(result: any): Orderbook {
+  private buildOrderbook(result: any): Orderbook {
     const bids: OrderbookEntry[] = result.bids.map((bid: any) => {
         return new OrderbookEntry(parseFloat(bid[1]), parseFloat(bid[0]));
     });
