@@ -1,6 +1,6 @@
 FROM node:16
 
-RUN apt-get update && apt-get install -y redis-tools
+RUN apt-get update && apt-get install -y redis-tools redis-server
 
 WORKDIR /user/src/app
 
