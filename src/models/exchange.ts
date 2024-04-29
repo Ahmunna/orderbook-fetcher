@@ -17,6 +17,7 @@
 //     }
 // }
 
+// TODO: Persist exchanges in DB, use ORM for cleaner code
 export class Exchange {
     name: string
     code: string;

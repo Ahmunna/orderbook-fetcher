@@ -16,7 +16,7 @@ export class BinanceAdapter implements ExchangeBaseAdapter {
   }
 
   private to_pair(base_asset: string, quote_asset: string): string {
-    return `${base_asset}${quote_asset}`
+    return `${base_asset.toUpperCase()}${quote_asset.toUpperCase()}`
   }
 
   private buildOrderbook(result: any): Orderbook {

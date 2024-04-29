@@ -1,5 +1,7 @@
 import { ExchangeBaseClient } from './exchangeBaseClient'
 import axios from 'axios'
+
+// TODO: Implement Timeout and Retry Mechanisms
 export class KrakenClient implements ExchangeBaseClient {
   private url: string;
 

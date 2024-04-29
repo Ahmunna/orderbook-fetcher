@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ExchangeBaseClient } from './exchangeBaseClient'
 
+// TODO: Implement Timeout and Retry Mechanisms
 export class HuobiClient implements ExchangeBaseClient {
   private url: string;
 

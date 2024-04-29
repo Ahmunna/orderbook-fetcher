@@ -4,7 +4,9 @@ import { Orderbook } from '../models/orderbook';
 
 export class MarketPriceService {
 
+  // TODO: Handle errors better
   async getPrice(baseAsset: string, quoteAsset: string): Promise<number> {
+    // TODO: get exchanges from Database
     const exchanges: Exchange[] = [
         new Exchange('Kraken', 'kraken'),
         new Exchange('Binance', 'binance'),
