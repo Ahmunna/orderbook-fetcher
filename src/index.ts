@@ -5,7 +5,7 @@ import connectToDB from './db';
 import { Application } from "express";
 const port: number =  Number(process.env.PORT) || 3000;
 const tickersRoutes = require('./routes/tickers');
-const redis = require("redis");
+
 config();
 // connectToDB();
 
