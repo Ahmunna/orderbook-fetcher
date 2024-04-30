@@ -9,7 +9,7 @@ redis.on('connect', () => {
 });
 
   // TODO: Handle errors better
-  const getMarketPrice = ( async (req: Request, res: Response)  => {
+  export const getMarketPrice = ( async (req: Request, res: Response)  => {
 
     const key = `${req.query.baseAsset}${req.query.quoteAsset}`
 
