@@ -9,6 +9,7 @@ export class HuobiClient implements ExchangeBaseClient {
     this.url = url;
   }
 
+  //TODO: Control the return type and not the non primitve object type
   async orderbook(pair: string, depth: number = 10): Promise<object> {
     const endpoint: string = `${this.url}/market/depth`
 

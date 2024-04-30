@@ -9,7 +9,9 @@ export class KrakenClient implements ExchangeBaseClient {
     this.url = url;
   }
 
+  //TODO: Control the return type and not the non primitve object type
   async orderbook(pair: string, depth: number = 10): Promise<object> {
+
     const endpoint: string = `${this.url}/Depth`
 
     const params: object = { pair: pair, depth: depth }

@@ -5,29 +5,31 @@ import { OrderbookEntry } from '../models/orderbookEntry';
 
 export class KrakenAdapter implements ExchangeBaseAdapter {
 
-    async orderbook(base_asset: string, quote_asset: string): Promise<Orderbook> {
-        const result: any = await this.client().orderbook(this.to_pair(base_asset, quote_asset));
-        return this.buildOrderbook(result);
-      }
-    
+  private krakenClient: KrakenClient;
 
-  private client(): KrakenClient {
-    return new KrakenClient(process.env.KRAKEN_API_BASE_URL || '')
+  constructor() {
+    this.krakenClient = new KrakenClient(process.env.KRAKEN_API_BASE_URL || '');
   }
 
-  private to_pair(base_asset: string, quote_asset: string): string {
-    return `${base_asset.toUpperCase()}${quote_asset.toUpperCase()}`
+  async orderbook(baseAsset: string, quoteAsset: string): Promise<Orderbook> {
+
+    const result: any = await this.krakenClient.orderbook(this.to_pair(baseAsset, quoteAsset));
+    return this.buildOrderbook(result);
+  }
+
+  private to_pair(baseAsset: string, quoteAsset: string): string {
+    return `${baseAsset.toUpperCase()}${quoteAsset.toUpperCase()}`
   }
 
   private buildOrderbook(result: any): Orderbook {
     const bids: OrderbookEntry[] = result.bids.map((bid: any) => {
-        return new OrderbookEntry(parseFloat(bid[1]), parseFloat(bid[0]));
+      return new OrderbookEntry(parseFloat(bid[1]), parseFloat(bid[0]));
     });
 
     const asks: OrderbookEntry[] = result.asks.map((ask: any) => {
-        return new OrderbookEntry(parseFloat(ask[1]), parseFloat(ask[0]));
+      return new OrderbookEntry(parseFloat(ask[1]), parseFloat(ask[0]));
     });
 
     return new Orderbook(bids, asks);
-}
+  }
 }

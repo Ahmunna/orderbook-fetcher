@@ -5,18 +5,19 @@ import { OrderbookEntry } from '../models/orderbookEntry';
 
 export class BinanceAdapter implements ExchangeBaseAdapter {
 
-  async orderbook(base_asset: string, quote_asset: string): Promise<Orderbook> {
-    const result: object = await this.client().orderbook(this.to_pair(base_asset, quote_asset));
+  private binanceClient: BinanceClient;
 
+  constructor() {
+    this.binanceClient = new BinanceClient(process.env.BINANCE_API_BASE_URL || '');
+  }
+
+  async orderbook(baseAsset: string, quoteAsset: string): Promise<Orderbook> {
+    const result: object = await this.binanceClient.orderbook(this.to_pair(baseAsset, quoteAsset));
     return this.buildOrderbook(result);
   }
 
-  private client(): BinanceClient {
-    return new BinanceClient(process.env.BINANCE_API_BASE_URL || '')
-  }
-
-  private to_pair(base_asset: string, quote_asset: string): string {
-    return `${base_asset.toUpperCase()}${quote_asset.toUpperCase()}`
+  private to_pair(baseAsset: string, quoteAsset: string): string {
+    return `${baseAsset.toUpperCase()}${quoteAsset.toUpperCase()}`
   }
 
   private buildOrderbook(result: any): Orderbook {
@@ -29,5 +30,5 @@ export class BinanceAdapter implements ExchangeBaseAdapter {
     });
 
     return new Orderbook(bids, asks);
-}
+  }
 }

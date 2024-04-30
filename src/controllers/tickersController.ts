@@ -21,14 +21,16 @@ redis.on('connect', () => {
       }
       else {
         const marketPriceSerice = new MarketPriceService();
-        const price = await marketPriceSerice.getPrice(req.params.baseAsset, req.params.quoteAsset);
+        const baseAsset: string = req.query.baseAsset as string;
+        const quoteAsset: string = req.query.quoteAsset as string;
+        const price = await marketPriceSerice.getPrice(baseAsset, quoteAsset);
         redis.setex(key, 30, price)
         res.json({ result: price })
       }
     }
     catch(error: any)
     {
-      res.sendStatus(500);
+      res.json({ error: error.message})
     }
   })
 

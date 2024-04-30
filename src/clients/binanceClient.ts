@@ -7,8 +7,9 @@ export class BinanceClient implements ExchangeBaseClient {
     this.url = url;
   }
 
+  //TODO: Control the return type and not the non primitve object type
   async orderbook(pair: string, limit: number = 10): Promise<object> {
-    const endpoint: string = `${this.url}/api/v3/depth`
+    const endpoint: string = `${this.url}/depth`
     const params: object = {
       symbol: pair,
       limit: limit.toString()
@@ -19,8 +20,8 @@ export class BinanceClient implements ExchangeBaseClient {
 
       return response.data
     }
-    catch(err) {
-      throw new Error('Failed to fetch order book');
+    catch(err: any) {
+      throw new Error(`Failed to fetch order book: ${err.message}`);
     }
   }
 }

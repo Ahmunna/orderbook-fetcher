@@ -7,26 +7,28 @@ import { Orderbook } from "../models/orderbook";
 
 export class ExchangeDecorator {
 
-    exchange: Exchange;
+  exchange: Exchange;
+  adapter: ExchangeBaseAdapter;
 
-    constructor(exchange: Exchange) {
-        this.exchange = exchange
-    }
+  constructor(exchange: Exchange) {
+    this.exchange = exchange;
+    this.adapter = this.createAdapter();
+  }
 
-  adapter(): ExchangeBaseAdapter {
-    switch(this.exchange.code) {
-        case 'kraken':
-            return new KrakenAdapter();
-        case 'huobi':
-            return new HuobiAdapter();
-        case 'binance':
-            return new BinanceAdapter();
-        default:
-            throw new Error(`Unsupported exchange code: ${this.exchange.code}`);
+  private createAdapter(): ExchangeBaseAdapter {
+    switch (this.exchange.code) {
+      case 'kraken':
+        return new KrakenAdapter();
+      case 'huobi':
+        return new HuobiAdapter();
+      case 'binance':
+        return new BinanceAdapter();
+      default:
+        throw new Error(`Unsupported exchange code: ${this.exchange.code}`);
     }
   }
 
-  async orderbook(base_asset: string, quote_asset: string): Promise<Orderbook> {
-    return await this.adapter().orderbook(base_asset, quote_asset);
+  async orderbook(baseAsset: string, quoteAsset: string): Promise<Orderbook> {
+    return await this.adapter.orderbook(baseAsset, quoteAsset);
   }
 }
