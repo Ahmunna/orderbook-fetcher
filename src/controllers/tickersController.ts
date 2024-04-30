@@ -2,7 +2,10 @@ import { MarketPriceService } from '../services/marketPriceService';
 import { Request, Response } from 'express';
 import Redis from 'ioredis';
 
-const redis = new Redis();
+const redis = new Redis({
+  port: 6379,
+  host: 'cache'
+});
 
 redis.on('connect', () => {
   console.log('Redis client is connected');
